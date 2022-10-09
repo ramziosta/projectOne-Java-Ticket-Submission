@@ -1,0 +1,29 @@
+2022-10-08 23:55:44,389 INFO io.javalin.core.util.JavalinLogger [main] 
+       __                      __ _            __ __
+      / /____ _ _   __ ____ _ / /(_)____      / // /
+ __  / // __ `/| | / // __ `// // // __ \    / // /_
+/ /_/ // /_/ / | |/ // /_/ // // // / / /   /__  __/
+\____/ \__,_/  |___/ \__,_//_//_//_/ /_/      /_/
+
+          https://javalin.io/documentation
+
+2022-10-08 23:55:44,401 INFO org.eclipse.jetty.util.log.Log [main] Logging initialized @635ms to org.eclipse.jetty.util.log.Slf4jLog
+2022-10-08 23:55:44,402 INFO io.javalin.core.util.JavalinLogger [main] Starting Javalin ...
+2022-10-08 23:55:44,429 INFO io.javalin.core.util.JavalinLogger [main] You are running Javalin 4.6.4 (released July 8, 2022. Your Javalin version is 92 days old. Consider checking for a newer version.).
+2022-10-08 23:55:44,681 ERROR io.javalin.core.util.JavalinLogger [main] Failed to start Javalin
+2022-10-08 23:55:44,681 INFO io.javalin.core.util.JavalinLogger [main] Stopping Javalin ...
+2022-10-08 23:55:44,689 INFO io.javalin.core.util.JavalinLogger [main] Javalin has stopped
+2022-10-08 23:57:45,285 INFO io.javalin.core.util.JavalinLogger [main] 
+       __                      __ _            __ __
+      / /____ _ _   __ ____ _ / /(_)____      / // /
+ __  / // __ `/| | / // __ `// // // __ \    / // /_
+/ /_/ // /_/ / | |/ // /_/ // // // / / /   /__  __/
+\____/ \__,_/  |___/ \__,_//_//_//_/ /_/      /_/
+
+          https://javalin.io/documentation
+
+2022-10-08 23:57:45,297 INFO org.eclipse.jetty.util.log.Log [main] Logging initialized @698ms to org.eclipse.jetty.util.log.Slf4jLog
+2022-10-08 23:57:45,298 INFO io.javalin.core.util.JavalinLogger [main] Starting Javalin ...
+2022-10-08 23:57:45,322 INFO io.javalin.core.util.JavalinLogger [main] You are running Javalin 4.6.4 (released July 8, 2022. Your Javalin version is 92 days old. Consider checking for a newer version.).
+2022-10-08 23:57:45,587 INFO io.javalin.core.util.JavalinLogger [main] Listening on http://localhost:8081/
+2022-10-08 23:57:45,588 INFO io.javalin.core.util.JavalinLogger [main] Javalin started in 290ms \o/
