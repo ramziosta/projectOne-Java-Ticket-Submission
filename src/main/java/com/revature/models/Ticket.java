@@ -1,11 +1,10 @@
 package com.revature.models;
 
-import java.util.Date;
 
 public class Ticket {
     int id;
     double amount;
-    Date date;
+//    Date date;
     int employee_id;
     String status;
     String description;
@@ -88,7 +87,7 @@ public class Ticket {
     }
 
     public String toString() {
-        return "Ticket{id=" + this.id + ", amount='" + this.amount + '\'' + ", date='" + this.date + '\''
+        return "Ticket{id=" + this.id + ", amount='" + this.amount + '\''  + '\''
                 + ", employee_id=" + this.employee_id + ", status=" + this.status +  ", description=" + this.description + '}';
     }
 }

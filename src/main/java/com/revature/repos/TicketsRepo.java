@@ -51,7 +51,7 @@ public class TicketsRepo implements CRUDDaoInterface<Ticket> {
         return 0;
     }
 
-    // ! needs testing
+    // tested works fine
     @Override
     public List<Ticket> getAll() {
 
@@ -68,7 +68,7 @@ public class TicketsRepo implements CRUDDaoInterface<Ticket> {
 
                 ticket.setId(rs.getInt("id"));
                 ticket.setAmount(rs.getDouble("amount"));
-//                ticket.setDate(rs.getString("submission_date"));
+                ticket.setStatus(rs.getString("status"));
                 ticket.setEmployee_id(rs.getInt("employee_id"));
                 ticket.setDescription(rs.getString("description"));
 
@@ -84,7 +84,37 @@ public class TicketsRepo implements CRUDDaoInterface<Ticket> {
     }
 
     // ! needs testing
-    // todo gets ticket by employee id
+    public List<Ticket> getAllPending() {
+
+        List<Ticket> tickets = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM tickets WHERE status = 'PENDING'";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+
+                Ticket ticket = new Ticket();
+
+                ticket.setId(rs.getInt("id"));
+                ticket.setAmount(rs.getDouble("amount"));
+                ticket.setStatus(rs.getString("status"));
+                ticket.setEmployee_id(rs.getInt("employee_id"));
+                ticket.setDescription(rs.getString("description"));
+
+                tickets.add(ticket);
+            }
+
+            return tickets;
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+        }
+        return null;
+    }
+
+    // ! needs testing
     @Override
     public Ticket getById(int employee_id) {
 
@@ -103,7 +133,7 @@ public class TicketsRepo implements CRUDDaoInterface<Ticket> {
             while (rs.next()) {
                 ticket.setId(rs.getInt("id"));
                 ticket.setAmount(rs.getDouble("amount"));
-//                ticket.setDate(rs.getString("submission_date"));
+                ticket.setStatus(rs.getString("status"));
                 ticket.setDescription(rs.getString("description"));
 
             }
@@ -116,12 +146,47 @@ public class TicketsRepo implements CRUDDaoInterface<Ticket> {
         return null;
     }
 
+
+
+    public List<Ticket> getAllById(int employee_id) {
+        List<Ticket> tickets = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM tickets WHERE employee_id = ?";
+
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1, employee_id);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            // Returns a ticket therefore a new instance of a ticket from database has
+            // to be created
+            Ticket ticket = new Ticket();
+
+            while (rs.next()) {
+                ticket.setId(rs.getInt("id"));
+                ticket.setAmount(rs.getDouble("amount"));
+                ticket.setStatus(rs.getString("status"));
+                ticket.setDescription(rs.getString("description"));
+                tickets.add(ticket);
+            }
+
+            return tickets;
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+        }
+        return null;
+    }
+
+
+
     // ! needs testing
     // todo ticket by status
     public Ticket getByStatus(String status) {
 
         try {
-            String sql = "SELECT * FROM tickets WHERE status = ?";
+            String sql = "SELECT * FROM tickets WHERE status = ?;";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, status);
@@ -146,24 +211,23 @@ public class TicketsRepo implements CRUDDaoInterface<Ticket> {
     }
 
     // ! needs testing
-    // THIS ONLY UPDATES THE AMOUNT
+    // Approves the ticket
     @Override
     public Ticket update(Ticket ticket) {
 
         try {
 
-            String sql = "UPDATE tickets SET amount = ? WHERE id = ?";
+            String sql = "UPDATE tickets SET status = 'Approved' WHERE id = ?";
 
             PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setDouble(1, ticket.getAmount());
-            pstmt.setInt(2, ticket.getId());
+            pstmt.setInt(1, ticket.getId());
 
             pstmt.executeUpdate();
 
             ResultSet rs = pstmt.getGeneratedKeys();
 
             while (rs.next()) {
-                ticket.setAmount(rs.getDouble("amount"));
+                ticket.setStatus(rs.getString("status"));
             }
 
             return ticket;

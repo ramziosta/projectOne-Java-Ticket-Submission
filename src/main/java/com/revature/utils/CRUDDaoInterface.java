@@ -9,6 +9,7 @@ public interface CRUDDaoInterface<T> {
     List<T> getAll();
 
     T getById(int id);
+//    List<T>getAllById();
 
     T update(T t);
 

@@ -3,6 +3,7 @@ package com.revature.controllers;
 import com.revature.models.Ticket;
 import com.revature.services.TicketService;
 import io.javalin.http.Handler;
+
 public class TicketController {
     TicketService service;
 
@@ -13,7 +14,6 @@ public class TicketController {
     public TicketController(TicketService ticketService) {
         service = ticketService;
     }
-
 
     // create
     public Handler createNewTicket = context -> {
@@ -29,18 +29,39 @@ public class TicketController {
         }
     };
 
-
-
     // get all tickets
     public Handler getAllTickets = context -> {
         context.json(service.getAllTickets());
-        // add from pic validation
+       
     };
 
+    // get all pending tickets
+    public Handler getAllPendingTickets = context -> {
+        context.json(service.getAllPendingTickets());
+       
+    };
 
+    // gets all tickets by employee_id
+    public Handler getTicketsById = context -> {
+        String param = context.pathParam("id");
+        try {
+            int id = Integer.parseInt(param);
+            Ticket ticket = service.getTicketsById(id);
 
-    // id
-    public Handler getTicketById = context -> {
+            if (ticket != null) {
+                context.json(ticket).status(200);
+            } else {
+                context.result("Tickets not found").status(400);
+            }
+        } catch (NumberFormatException nFMException) {
+            System.out.println(nFMException.getMessage());
+        }
+
+    };
+
+    // > get ticket by STATUS
+
+    public Handler getTicketByStatus = context -> {
         String param = context.pathParam("id");
         try {
             int id = Integer.parseInt(param);
@@ -57,9 +78,7 @@ public class TicketController {
 
     };
 
-
-
-    // update
+    //> update ticket 
 
     public Handler updateTicket = context -> {
 

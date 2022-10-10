@@ -25,9 +25,10 @@ public class Driver {
         app.put("/login",employeeController.login);
 
         app.get("tickets", ticketController.getAllTickets);
-        app.get("/ticket/{id}", ticketController.getTicketById);
+        app.get("/tickets/pending", ticketController.getAllPendingTickets);
+        app.get("tickets/{id}", ticketController.getTicketsById);
         app.post("/ticket", ticketController.createNewTicket);
-        app.put("/ticket", ticketController.updateTicket);
+        app.put("/approve/ticket/{id}", ticketController.updateTicket);
         app.delete("/ticket", ticketController.deleteTicket);
     }
 }

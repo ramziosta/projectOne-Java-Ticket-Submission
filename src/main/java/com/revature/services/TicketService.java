@@ -17,7 +17,6 @@ public class TicketService {
     }
 
     // create a ticket
-    //todo submit ticket amount, date, employee-Id, description
     public int createTicket(Ticket ticket) {
 
         return ticketRepo.create(ticket);
@@ -25,46 +24,47 @@ public class TicketService {
     }
 
     // read all tickets
-    //todo veiw all reimbursements
+   
     public List<Ticket> getAllTickets() {
         return ticketRepo.getAll();
     }
 
-    // read byID change to status
-    //todo get ticket by employee_id
-    public Ticket getTicketById(int id) {
-        return ticketRepo.getById(id);
+
+    public List<Ticket> getAllPendingTickets() {
+        return ticketRepo.getAllPending();
     }
-    //todo get ticket by status pending/denied
-    public Ticket getTicketByStatus(String status) {
-        return ticketRepo.getByStatus(status);
+
+
+    // todo get tickets by employee_id
+    public List<Ticket> getTicketsById(int id) {
+        return ticketRepo.getAllById(id);
     }
 
     // update
-    //todo updates the amount
-    public Ticket updateTicket(Ticket ticket) {
-        return ticketRepo.update(ticket);
-    }
-    // update
-    //todo updates the status
+     public Ticket updateTicket(Ticket ticket) {
+     return ticketRepo.update(ticket);
+     }
+
+    // > update
+    // todo updates the status
     public Ticket updateTicketStatus(Ticket ticket) {
         return ticketRepo.update(ticket);
     }
 
-    // todo Approve or deny the ticket
-    //> sets the status to Approve or deny
-//    public Ticket approveOrDenyTicket(Ticket ticket) {
-//        return ticketRepo.approveOrDeny(ticket);
-//    }
+    // Approve or deny the ticket
+    // sets the status to Approve or deny
+    // public Ticket approveOrDenyTicket(Ticket ticket) {
+    // return ticketRepo.approveOrDeny(ticket);
+    // }
 
     // delete
-    
+
     public boolean deleteTicketById(int id) {
         return ticketRepo.deleteById(id);
     }
 
-     public boolean deleteTicket(Ticket ticket) {
-         return ticketRepo.delete(ticket);
-     }
+    public boolean deleteTicket(Ticket ticket) {
+        return ticketRepo.delete(ticket);
+    }
 
 }
