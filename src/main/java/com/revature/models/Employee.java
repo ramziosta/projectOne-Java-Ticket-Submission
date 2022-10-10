@@ -13,27 +13,19 @@ public class Employee {
     public Employee() {
     }
 
-    // > constructor For MANAGER with no id as it's generated from DB
+    // > constructor with no id as it's generated from DB
     public Employee(String firstName, String lastName, String email, String password, boolean isManager) {
 
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.isManager = true;
+        this.isManager = isManager;
     }
 
-    // > constructor for EMPLOYEE with no id as it's generated from DB
-    public Employee(String firstName, String lastName, String email, String password) {
 
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.isManager = false;
-    }
 
-    // > All args constructor, HR can issue ID and Manager status
+    // > All args constructor
     public Employee(int id, String firstName, String lastName, String email, String password, boolean isManager) {
 
         this.id = id;
@@ -45,6 +37,22 @@ public class Employee {
     }
 
     // ! METHODS
+    // Login
+    public String login(String email, String password){
+
+        if (this.email == null) {
+            return "Email entered incorrectly or doesn't exist, please check your email or contact HR";
+        }
+
+        if (this.email.equals(email) && this.password.equals(password)){
+            return "Success";
+        }
+        else {
+            return "Email or password entered incorrectly!";
+        }
+    }
+
+
 
     // < Getter & Setter ID
     public int getId() {

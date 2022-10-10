@@ -10,10 +10,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserRepo implements CRUDDaoInterface<Employee> {
+public class EmployeeRepo implements CRUDDaoInterface<Employee> {
     public Connection connection;
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserRepo.class);
-    public UserRepo() {
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeRepo.class);
+    public EmployeeRepo() {
 
         try {
             connection = ConnectionManager.getConnection();
@@ -25,18 +25,18 @@ public class UserRepo implements CRUDDaoInterface<Employee> {
 
     }
 
-    // tested works fine
+    //! needs testing
     @Override
-    public int create(Employee user) {
-        String sql = "INSERT INTO users (id, first_name, last_name, email, pass_word) VALUES(default,?,?,?,?); ";
+    public int create(Employee employee) {
+        String sql = "INSERT INTO employees (id, first_name, last_name, email, pass_word, is_manager) VALUES(default,?,?,?,?,?); ";
 
         try {
             PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setString(1, user.getFirstName());
-            pstmt.setString(2, user.getLastName());
-            pstmt.setString(3, user.getEmail());
-            pstmt.setString(4, user.getPassword());
-
+            pstmt.setString(1, employee.getFirstName());
+            pstmt.setString(2, employee.getLastName());
+            pstmt.setString(3, employee.getEmail());
+            pstmt.setString(4, employee.getPassword());
+            pstmt.setBoolean(5, employee.getIsManager());
             pstmt.executeUpdate();
 
             ResultSet rs = pstmt.getGeneratedKeys();
@@ -51,80 +51,81 @@ public class UserRepo implements CRUDDaoInterface<Employee> {
         return 0;
     }
 
-    // tested works fine
+    //! needs testing
     @Override
     public List<Employee> getAll() {
 
-        List<Employee> users = new ArrayList<>();
+        List<Employee> employees = new ArrayList<>();
 
         try {
-            String sql = "SELECT * FROM users";
+            String sql = "SELECT * FROM employees";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                Employee user = new Employee();
-                user.setId(rs.getInt("id"));
-                user.setFirstName(rs.getString("first_name"));
-                user.setLastName(rs.getString("last_name"));
-                user.setEmail(rs.getString("email"));
-                user.setPassword(rs.getString("pass_word"));
-                users.add(user);
+                Employee employee = new Employee();
+                employee.setId(rs.getInt("id"));
+                employee.setFirstName(rs.getString("first_name"));
+                employee.setLastName(rs.getString("last_name"));
+                employee.setEmail(rs.getString("email"));
+                employee.setPassword(rs.getString("pass_word"));
+                employees.add(employee);
             }
 
-            return users;
+            return employees;
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
         }
         return null;
     }
 
-    // tested works fine
+    //! needs testing
     @Override
     public Employee getById(int id) {
         try {
-            String sql = "SELECT * FROM users WHERE id = ?";
+            String sql = "SELECT * FROM employees WHERE id = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
-            Employee user = new Employee();
+            Employee employee = new Employee();
 
             while (rs.next()) {
-                user.setId(rs.getInt("id"));
-                user.setFirstName(rs.getString("first_name"));
-                user.setLastName(rs.getString("last_name"));
-                user.setEmail(rs.getString("email"));
-                user.setPassword(rs.getString("pass_word"));
+                employee.setId(rs.getInt("id"));
+                employee.setFirstName(rs.getString("first_name"));
+                employee.setLastName(rs.getString("last_name"));
+                employee.setEmail(rs.getString("email"));
+                employee.setPassword(rs.getString("pass_word"));
+
             }
 
-            return user;
+            return employee;
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
         }
         return null;
     }
 
-    // tested works fine
+    //!needs testing
     @Override
-    public Employee update(Employee user) {
+    public Employee update(Employee employee) {
 
         try {
 
-            String sql = "UPDATE users SET email = ? WHERE id = ?";
+            String sql = "UPDATE employees SET email = ? WHERE id = ?";
 
             PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setString(1, user.getEmail());
-            pstmt.setInt(2, user.getId());
+            pstmt.setString(1, employee.getEmail());
+            pstmt.setInt(2, employee.getId());
 
             pstmt.executeUpdate();
 
             ResultSet rs = pstmt.getGeneratedKeys();
 
             while (rs.next()) {
-                user.setEmail(rs.getString("email"));
+                employee.setEmail(rs.getString("email"));
             }
 
-            return user;
+            return employee;
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
@@ -134,11 +135,11 @@ public class UserRepo implements CRUDDaoInterface<Employee> {
 
     // tested works fine
     @Override
-    public boolean delete(Employee user) {
+    public boolean delete(Employee employee) {
         try {
-            String sql = "DELETE FROM users WHERE id = ?";
+            String sql = "DELETE FROM employees WHERE id = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setInt(1, user.getId());
+            pstmt.setInt(1, employee.getId());
             pstmt.execute();
             return true;
             // pstmt.execute() specifically returns false
