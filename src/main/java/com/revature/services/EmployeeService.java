@@ -44,4 +44,12 @@ public class EmployeeService {
       return employeeRepo.delete(employee);
    }
 
+   // logins
+   // todo implement log in feature
+   // > sets status from false to true
+   public Employee login(Employee employee) {
+      return employeeRepo.login(employee);
+
+   }
+
 }

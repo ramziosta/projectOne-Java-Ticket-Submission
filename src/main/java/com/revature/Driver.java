@@ -22,11 +22,12 @@ public class Driver {
         app.post("/employee", employeeController.createNewEmployee);
         app.put("/employee", employeeController.updateEmployee);
         app.delete("/employee", employeeController.deleteEmployee);
-//
-       app.get("tickets", ticketController.getAllTickets);
-       app.get("/ticket/{id}", ticketController.getTicketById);
-       app.post("/ticket", ticketController.createNewTicket);
-       app.put("/ticket", ticketController.updateTicket);
-       app.delete("/ticket", ticketController.deleteTicket);
+        app.put("/login",employeeController.login);
+
+        app.get("tickets", ticketController.getAllTickets);
+        app.get("/ticket/{id}", ticketController.getTicketById);
+        app.post("/ticket", ticketController.createNewTicket);
+        app.put("/ticket", ticketController.updateTicket);
+        app.delete("/ticket", ticketController.deleteTicket);
     }
 }

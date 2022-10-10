@@ -25,7 +25,7 @@ public class EmployeeController {
             employee.setId(id);
             context.json(employee).status(200);
         } else {
-            context.result("Employee not created").status(400);
+            context.result("Please choose a different email, or login to your account.").status(400);
         }
     };
 
@@ -77,6 +77,17 @@ public class EmployeeController {
             context.json(service.deleteEmployee(employee)).status(200);
         } else {
             context.result("could not delete employee").status(400);
+        }
+    };
+
+    public Handler login = context -> {
+        Employee employee = context.bodyAsClass(Employee.class);
+        employee = service.login(employee);
+
+        if (employee != null) {
+            context.json(employee).status(200);
+        } else {
+            context.result("Log in failed, please check email or password").status(400);
         }
     };
 

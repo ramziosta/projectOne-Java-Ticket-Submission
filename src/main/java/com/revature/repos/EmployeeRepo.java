@@ -11,8 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeRepo implements CRUDDaoInterface<Employee> {
+
     public Connection connection;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeRepo.class);
+
     public EmployeeRepo() {
 
         try {
@@ -25,7 +28,7 @@ public class EmployeeRepo implements CRUDDaoInterface<Employee> {
 
     }
 
-    //! needs testing
+    // tested word fine
     @Override
     public int create(Employee employee) {
         String sql = "INSERT INTO employees (id, first_name, last_name, email, pass_word, is_manager) VALUES(default,?,?,?,?,?); ";
@@ -51,7 +54,7 @@ public class EmployeeRepo implements CRUDDaoInterface<Employee> {
         return 0;
     }
 
-    //! needs testing
+    // ! needs testing
     @Override
     public List<Employee> getAll() {
 
@@ -79,7 +82,7 @@ public class EmployeeRepo implements CRUDDaoInterface<Employee> {
         return null;
     }
 
-    //! needs testing
+    // ! needs testing
     @Override
     public Employee getById(int id) {
         try {
@@ -105,7 +108,7 @@ public class EmployeeRepo implements CRUDDaoInterface<Employee> {
         return null;
     }
 
-    //!needs testing
+    // !needs testing
     @Override
     public Employee update(Employee employee) {
 
@@ -133,9 +136,10 @@ public class EmployeeRepo implements CRUDDaoInterface<Employee> {
         return null;
     }
 
-    // tested works fine
+    // ! needs testing
     @Override
     public boolean delete(Employee employee) {
+
         try {
             String sql = "DELETE FROM employees WHERE id = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
@@ -150,4 +154,34 @@ public class EmployeeRepo implements CRUDDaoInterface<Employee> {
 
         return false;
     }
-}
+
+
+    // tested works fine 
+        public Employee login(Employee employee) {
+
+        try {
+
+            String sql = "UPDATE employees SET logged_in = true WHERE email = ? AND pass_word = ?";
+
+            PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, employee.getEmail());
+            pstmt.setString(2, employee.getPassword());
+
+            pstmt.executeUpdate();
+
+            ResultSet rs = pstmt.getGeneratedKeys();
+
+            while (rs.next()) {
+                employee.setEmail(rs.getString("email"));
+            }
+
+            return employee;
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+        }
+        return null;
+    }
+
+    }
+

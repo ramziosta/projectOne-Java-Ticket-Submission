@@ -2,7 +2,7 @@ package com.revature.controllers;
 
 import com.revature.models.Ticket;
 import com.revature.services.TicketService;
-
+import io.javalin.http.Handler;
 public class TicketController {
     TicketService service;
 
@@ -72,7 +72,20 @@ public class TicketController {
             context.result("Ticket not updated").status(400);
         }
     };
-\
+    // update status
+
+    public Handler updateTicketStatus = context -> {
+
+        Ticket ticket = context.bodyAsClass(Ticket.class);
+        ticket = service.updateTicketStatus(ticket);
+
+        if (ticket != null) {
+            context.json(ticket).status(200);
+        } else {
+            context.result("Ticket not updated").status(400);
+        }
+    };
+
     // delete
 
     public Handler deleteTicket = context -> {
