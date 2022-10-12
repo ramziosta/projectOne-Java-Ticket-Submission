@@ -35,27 +35,20 @@ public class TicketService {
     }
 
 
-    // todo get tickets by employee_id
+    // get tickets by employee_id
     public List<Ticket> getTicketsById(int id) {
         return ticketRepo.getAllById(id);
     }
 
-    // update
-     public Ticket updateTicket(Ticket ticket) {
-     return ticketRepo.update(ticket);
-     }
 
-    // > update
+    // > update sets the status to Approve or deny
     // todo updates the status
-    public Ticket updateTicketStatus(Ticket ticket) {
+    public Ticket updateTicket(Ticket ticket) {
         return ticketRepo.update(ticket);
     }
 
-    // Approve or deny the ticket
-    // sets the status to Approve or deny
-    // public Ticket approveOrDenyTicket(Ticket ticket) {
-    // return ticketRepo.approveOrDeny(ticket);
-    // }
+
+
 
     // delete
 

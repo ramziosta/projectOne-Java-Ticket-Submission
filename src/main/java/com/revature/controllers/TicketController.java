@@ -4,6 +4,8 @@ import com.revature.models.Ticket;
 import com.revature.services.TicketService;
 import io.javalin.http.Handler;
 
+import java.util.List;
+
 public class TicketController {
     TicketService service;
 
@@ -23,9 +25,9 @@ public class TicketController {
 
         if (id > 0) {
             ticket.setId(id);
-            context.json(ticket).status(200);
+            context.json(ticket).status(200).result("Submission successful.");
         } else {
-            context.result("Ticket not created").status(400);
+            context.result("Your reimbursement ticket was not created, please enter a description for your submission.").status(400);
         }
     };
 
@@ -46,7 +48,7 @@ public class TicketController {
         String param = context.pathParam("id");
         try {
             int id = Integer.parseInt(param);
-            Ticket ticket = service.getTicketsById(id);
+            List<Ticket> ticket = service.getTicketsById(id);
 
             if (ticket != null) {
                 context.json(ticket).status(200);
@@ -61,22 +63,22 @@ public class TicketController {
 
     // > get ticket by STATUS
 
-    public Handler getTicketByStatus = context -> {
-        String param = context.pathParam("id");
-        try {
-            int id = Integer.parseInt(param);
-            Ticket ticket = service.getTicketById(id);
-
-            if (ticket != null) {
-                context.json(ticket).status(200);
-            } else {
-                context.result("Ticket not found").status(400);
-            }
-        } catch (NumberFormatException nFMException) {
-            System.out.println(nFMException.getMessage());
-        }
-
-    };
+//    public Handler getTicketByStatus = context -> {
+//        String param = context.pathParam("id");
+//        try {
+//            int id = Integer.parseInt(param);
+//            Ticket ticket = service.getTicketById(id);
+//
+//            if (ticket != null) {
+//                context.json(ticket).status(200);
+//            } else {
+//                context.result("Ticket not found").status(400);
+//            }
+//        } catch (NumberFormatException nFMException) {
+//            System.out.println(nFMException.getMessage());
+//        }
+//
+//    };
 
     //> update ticket 
 
@@ -96,7 +98,7 @@ public class TicketController {
     public Handler updateTicketStatus = context -> {
 
         Ticket ticket = context.bodyAsClass(Ticket.class);
-        ticket = service.updateTicketStatus(ticket);
+        ticket = service.updateTicket(ticket);
 
         if (ticket != null) {
             context.json(ticket).status(200);

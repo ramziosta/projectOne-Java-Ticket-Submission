@@ -38,6 +38,7 @@ public class TicketsRepo implements CRUDDaoInterface<Ticket> {
             pstmt.setInt(2, ticket.getEmployee_id());
             pstmt.setString(3, ticket.getDescription());
 
+
             pstmt.executeUpdate();
 
             ResultSet rs = pstmt.getGeneratedKeys();
@@ -210,17 +211,21 @@ public class TicketsRepo implements CRUDDaoInterface<Ticket> {
         return null;
     }
 
+
+
+
     // ! needs testing
-    // Approves the ticket
+    // Approves or denies the ticket
     @Override
     public Ticket update(Ticket ticket) {
 
         try {
 
-            String sql = "UPDATE tickets SET status = 'Approved' WHERE id = ?";
+            String sql = "UPDATE tickets SET status = ? WHERE id = ?";
 
             PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, ticket.getId());
+            pstmt.setString(2,ticket.getStatus());
 
             pstmt.executeUpdate();
 
@@ -238,6 +243,9 @@ public class TicketsRepo implements CRUDDaoInterface<Ticket> {
         }
         return null;
     }
+
+
+
 
     // ! needs testing
     @Override

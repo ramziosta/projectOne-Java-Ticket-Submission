@@ -85,7 +85,8 @@ public class EmployeeController {
         employee = service.login(employee);
 
         if (employee != null) {
-            context.json(employee).status(200);
+            context.json(employee).status(200).result("you are logged in.");
+
         } else {
             context.result("Log in failed, please check email or password").status(400);
         }

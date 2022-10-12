@@ -9,6 +9,8 @@ public class Employee {
     private String password;
     private boolean isManager;
 
+    private boolean isLogin;
+
     // > no args constructor
     public Employee() {
     }
@@ -21,6 +23,7 @@ public class Employee {
         this.email = email;
         this.password = password;
         this.isManager = isManager;
+        this.isLogin = isLogin;
     }
 
 
@@ -107,6 +110,17 @@ public class Employee {
 
     public void setIsManager(boolean isNewManager) {
         this.isManager = isNewManager;
+    }
+
+
+    // < Getter & Setter isLogin
+
+    public boolean isLogin() {
+        return isLogin;
+    }
+
+    public void setLogin(boolean login) {
+        isLogin = login;
     }
 
     @Override
