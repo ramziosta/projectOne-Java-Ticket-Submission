@@ -16,7 +16,7 @@ public class Employee {
     }
 
     // > constructor with no id as it's generated from DB
-    public Employee(String firstName, String lastName, String email, String password, boolean isManager) {
+    public Employee(String firstName, String lastName, String email, String password, boolean isManager, boolean isLogin) {
 
         this.firstName = firstName;
         this.lastName = lastName;
@@ -29,7 +29,7 @@ public class Employee {
 
 
     // > All args constructor
-    public Employee(int id, String firstName, String lastName, String email, String password, boolean isManager) {
+    public Employee(int id, String firstName, String lastName, String email, String password, boolean isManager, boolean isLogin) {
 
         this.id = id;
         this.firstName = firstName;
@@ -37,6 +37,7 @@ public class Employee {
         this.email = email;
         this.password = password;
         this.isManager = isManager;
+        this.isLogin = isLogin;
     }
 
     // ! METHODS

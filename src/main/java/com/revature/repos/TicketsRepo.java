@@ -149,7 +149,8 @@ public class TicketsRepo implements CRUDDaoInterface<Ticket> {
 
 
 
-    public List<Ticket> getAllById(int employee_id) {
+    public List<Ticket> getEmployeeTicketsById(int employee_id) {
+
         List<Ticket> tickets = new ArrayList<>();
 
         try {
@@ -157,18 +158,15 @@ public class TicketsRepo implements CRUDDaoInterface<Ticket> {
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1, employee_id);
-
             ResultSet rs = pstmt.executeQuery();
 
-            // Returns a ticket therefore a new instance of a ticket from database has
-            // to be created
-            Ticket ticket = new Ticket();
-
             while (rs.next()) {
+                Ticket ticket = new Ticket();
                 ticket.setId(rs.getInt("id"));
                 ticket.setAmount(rs.getDouble("amount"));
                 ticket.setStatus(rs.getString("status"));
                 ticket.setDescription(rs.getString("description"));
+            
                 tickets.add(ticket);
             }
 
@@ -216,6 +214,36 @@ public class TicketsRepo implements CRUDDaoInterface<Ticket> {
 
     // ! needs testing
     // Approves or denies the ticket
+    public Ticket approveDenyTicket(Ticket ticket) {
+
+        try {
+
+            String sql = "UPDATE tickets SET status = ? WHERE id = ?";
+
+            PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, ticket.getStatus());
+            pstmt.setInt(2,ticket.getId());
+
+            pstmt.executeUpdate();
+
+            ResultSet rs = pstmt.getGeneratedKeys();
+
+            while (rs.next()){
+                ticket.setStatus(rs.getString("status"));
+            }
+
+            return ticket;
+
+        }catch(SQLException sqlException){
+            System.out.println(sqlException.getMessage());
+        }
+
+        return null;
+    }
+
+
+
+    //update not used
     @Override
     public Ticket update(Ticket ticket) {
 
@@ -223,21 +251,23 @@ public class TicketsRepo implements CRUDDaoInterface<Ticket> {
 
             String sql = "UPDATE tickets SET status = ? WHERE id = ?";
 
-            PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setInt(1, ticket.getId());
-            pstmt.setString(2,ticket.getStatus());
 
-            pstmt.executeUpdate();
+                PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                pstmt.setInt(1, ticket.getId());
+                pstmt.setString(2, ticket.getStatus());
 
-            ResultSet rs = pstmt.getGeneratedKeys();
+                pstmt.executeUpdate();
 
-            while (rs.next()) {
-                ticket.setStatus(rs.getString("status"));
-            }
+                ResultSet rs = pstmt.getGeneratedKeys();
 
-            return ticket;
+                while (rs.next()) {
+                    ticket.setStatus(rs.getString("status"));
+                }
 
-        } catch (SQLException sqlException) {
+                return ticket;
+
+
+            } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
 
         }

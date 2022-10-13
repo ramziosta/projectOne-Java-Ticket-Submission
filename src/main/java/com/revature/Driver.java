@@ -26,9 +26,9 @@ public class Driver {
 
         app.get("tickets", ticketController.getAllTickets);
         app.get("/tickets/pending", ticketController.getAllPendingTickets);
-        app.get("tickets/{id}", ticketController.getTicketsById);
+        app.get("tickets/{id}", ticketController.getEmployeeTicketsById);
         app.post("/ticket", ticketController.createNewTicket);
-        app.put("/ticket-approval/{id}", ticketController.updateTicket);
+        app.put("/ticket", ticketController.approveDenyTicket);
         app.delete("/ticket", ticketController.deleteTicket);
     }
 }

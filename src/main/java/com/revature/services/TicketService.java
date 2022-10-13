@@ -36,15 +36,15 @@ public class TicketService {
 
 
     // get tickets by employee_id
-    public List<Ticket> getTicketsById(int id) {
-        return ticketRepo.getAllById(id);
+    public List<Ticket> getEmployeeTicketsById(int id) {
+        return ticketRepo.getEmployeeTicketsById(id);
     }
 
 
     // > update sets the status to Approve or deny
     // todo updates the status
-    public Ticket updateTicket(Ticket ticket) {
-        return ticketRepo.update(ticket);
+    public Ticket approveDenyTicket(Ticket ticket) {
+        return ticketRepo.approveDenyTicket(ticket);
     }
 
 

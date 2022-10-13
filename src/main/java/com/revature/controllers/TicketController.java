@@ -27,7 +27,7 @@ public class TicketController {
             ticket.setId(id);
             context.json(ticket).status(200).result("Submission successful.");
         } else {
-            context.result("Your reimbursement ticket was not created, please enter a description for your submission.").status(400);
+            context.result("Your reimbursement ticket was not created, All fields including description must be filled.").status(400);
         }
     };
 
@@ -44,11 +44,11 @@ public class TicketController {
     };
 
     // gets all tickets by employee_id
-    public Handler getTicketsById = context -> {
+    public Handler getEmployeeTicketsById = context -> {
         String param = context.pathParam("id");
         try {
             int id = Integer.parseInt(param);
-            List<Ticket> ticket = service.getTicketsById(id);
+            List<Ticket> ticket = service.getEmployeeTicketsById(id);
 
             if (ticket != null) {
                 context.json(ticket).status(200);
@@ -80,12 +80,13 @@ public class TicketController {
 //
 //    };
 
-    //> update ticket 
+    //> update ticket
 
-    public Handler updateTicket = context -> {
+     // update status Approve or deny
+    public Handler approveDenyTicket = context -> {
 
         Ticket ticket = context.bodyAsClass(Ticket.class);
-        ticket = service.updateTicket(ticket);
+        ticket = service.approveDenyTicket(ticket);
 
         if (ticket != null) {
             context.json(ticket).status(200);
@@ -93,19 +94,19 @@ public class TicketController {
             context.result("Ticket not updated").status(400);
         }
     };
-    // update status
 
-    public Handler updateTicketStatus = context -> {
-
-        Ticket ticket = context.bodyAsClass(Ticket.class);
-        ticket = service.updateTicket(ticket);
-
-        if (ticket != null) {
-            context.json(ticket).status(200);
-        } else {
-            context.result("Ticket not updated").status(400);
-        }
-    };
+//
+//    public Handler updateTicketStatus = context -> {
+//
+//        Ticket ticket = context.bodyAsClass(Ticket.class);
+//        ticket = service.updateTicket(ticket);
+//
+//        if (ticket != null) {
+//            context.json(ticket).status(200);
+//        } else {
+//            context.result("Ticket not updated").status(400);
+//        }
+//    };
 
     // delete
 
